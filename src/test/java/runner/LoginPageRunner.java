@@ -1,19 +1,32 @@
 package runner;
 
 import com.interfaceElement.LoginPageInterFace;
+import com.pageObjectManager.PageObjectManager;
 import com.pageObjectModel.LoginPage;
+import com.utility.FileReaderManager;
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.util.Properties;
 
 import static com.base.baseSetup.*;
+import static com.utility.FileReaderManager.fileReaderManager;
 
+@Test
 public class LoginPageRunner {
-    public static void main(String[] args) {
+@Test
+    public static void loginPageTest()   {
         launchBrowser("chrome");
-        launchUrl("https://www.naukri.com/nlogin/login?srcTemplate=registerfree468x60&utm_source=google&utm_medium=cpc&utm_campaign=Brand&gclsrc=aw.ds&gad_source=1&gad_campaignid=19863995494&gbraid=0AAAAADLp3cGU47m46N5wx1fMEI0Ln8zHv&gclid=Cj0KCQjwlNPVBhCMARIsAPZ5RqhP-dusrQWPxj_tF-8WMTajGSqDV2wF5c2-cqKaQzzHHan9XAg5q58aAmxdEALw_wcB");
+        PageObjectManager manager= PageObjectManager.getPageObjectManager();
+        manager.getFileReaderManger().fileReaderManager("loginExcelPath");
+    String value=fileReaderManager("loginPageUrl");
+        launchUrl(value);
        takeScreenShot();
         LoginPage loginPage = new LoginPage();
         loginPage.enterEmail();
         loginPage.enterPassword();
         takeScreenShot();
         loginPage.clickLoginButton();
+        System.out.println("hi"+Thread.currentThread().getId());
     }
 }
