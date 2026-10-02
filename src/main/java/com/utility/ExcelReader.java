@@ -13,10 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 public class ExcelReader {
-    @DataProvider(name = "excelData")
-    public static Object[][] getExcelData() throws IOException {
-        return excelReader("loginExcelPath", 0);
-    }
+
     public static Object[][] excelReader(String propertyKey,int sheetNumber) throws IOException {
 File file=new File("D:\\WorkSpace\\Naukri\\src\\main\\resources\\Test.properties");
         FileInputStream fileInputStream=new FileInputStream(file);

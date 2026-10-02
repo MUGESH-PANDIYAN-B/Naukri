@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.io.IOException;
 import java.time.Duration;
 
 public class RegisterPage extends baseSetup {
@@ -67,8 +68,7 @@ public class RegisterPage extends baseSetup {
     public static void clickRegisterButton() {
         registerButton.click();
     }
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
         launchBrowser("chrome");
         launchUrl("https://www.naukri.com/registration/createAccount?othersrcp=23531&gclsrc=aw.ds&&utm_source=google&utm_medium=cpc&utm_campaign=Brand_Core_Exact&gad_source=1&gad_campaignid=23412039063&gbraid=0AAAAADLp3cFtsDKsmlO0GDVsYuJlPeek2&gclid=Cj0KCQjwzsjVBhC3ARIsALnMv4mYdd2yAZe3ykBv9xRn4K78N_9CdmHOnYU2HPDXuYobUue8THwT75YaAmhIEALw_wcB");
         new RegisterPage();

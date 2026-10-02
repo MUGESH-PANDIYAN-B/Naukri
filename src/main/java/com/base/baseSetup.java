@@ -18,13 +18,13 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 
-//import static baseSetup.extentReports;
 
 public class baseSetup {
     public static WebDriver driver;
 public static ExtentReports extentReports;
 public static File file;
     public static ExtentSparkReporter extentSparkReporter;
+    public static String timeStamp;
     public static void launchBrowser(String browserName) {
         try {
 
@@ -117,18 +117,15 @@ public static File file;
         }
 
     }
-    public static void takeScreenShot()
-    {
-        try{
+    public static String takeScreenShot() throws IOException {
+
             DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
-            String timeStamp=formatter.format(java.time.LocalDateTime.now());
-            File filepath=new File("D:\\WorkSpace\\Naukri\\src\\main\\resources\\screenShot\\screenshot_"+timeStamp+".png");
+           String timeStamp=formatter.format(java.time.LocalDateTime.now());
+            File filepath=new File("D:\\WorkSpace\\Naukri\\ReportScreenShot1"+timeStamp+".png");
             File screenshot=((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileHandler.copy(screenshot,filepath);
-        } catch (Exception e) {
-            Assert.fail("Failed to take screenshot: " + e.getMessage());
-        }
-
+          String  strFilePath=filepath.getAbsolutePath();
+            return strFilePath;
     }
      public static void verifyElementText (WebElement element ,String assertString)
      {
@@ -141,20 +138,23 @@ public static File file;
              Assert.fail("Failed to Assert: " + e.getMessage());
          }
      }
-     public static void extentReportsStart(String location){
+     public static ExtentReports extentReportsStart(){
+        DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+        timeStamp=formatter.format(java.time.LocalDateTime.now());
             extentReports= new ExtentReports();
-            file=new File(location);
+           file=new File("D:\\WorkSpace\\Naukri\\ReportScreenShot"+"\\Report_"+timeStamp+".html");
          extentSparkReporter=new ExtentSparkReporter(file);
          extentReports.attachReporter(extentSparkReporter);
          extentReports.setSystemInfo("OS",System.getProperty("os.name"));
          extentReports.setSystemInfo("Java Version",System.getProperty("java.version"));
-
+return extentReports;
 
      }
-     public static void extentReportsEnd(String location) throws IOException {
+     public static ExtentReports extentReportsEnd() throws IOException {
         extentReports.flush();
-         file = new File(location);
+         file = new File("D:\\WorkSpace\\Naukri\\ReportScreenShot"+"\\Report_"+timeStamp+".html");
          Desktop.getDesktop().browse((file).toURI());
+         return extentReports;
      }
 }
 
