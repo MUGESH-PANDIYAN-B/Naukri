@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class ExtentReport_Test
 {
+
     public static ExtentTest extentTest;
 
     public static void extentTestReportStart(){

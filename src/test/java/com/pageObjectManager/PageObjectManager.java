@@ -12,7 +12,7 @@ import static javax.swing.plaf.basic.BasicHTML.propertyKey;
 public class PageObjectManager {
 
     public static PageObjectManager pageObjectManager;
-    private LoginPage loginPage;
+    public static LoginPage loginPage;
     private RegisterPage registerPage;
 private baseSetup baseSetup;
     private NaukriDashBoard naukriDashBoard;
@@ -25,7 +25,7 @@ private static DataDrivenLoginPage dataDrivenLoginPage;
         return pageObjectManager;
     }
 
-    public LoginPage getLoginPage() {
+    public static LoginPage getLoginPage() {
         if (loginPage == null) {
             loginPage = new LoginPage();
         }

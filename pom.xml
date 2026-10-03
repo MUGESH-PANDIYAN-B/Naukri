@@ -72,5 +72,61 @@
             <version>2.22.0</version>
             <scope>compile</scope>
         </dependency>
+
+            <!-- 1. Selenium WebDriver (Browser Automation-kku) -->
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-java</artifactId>
+                <version>4.18.1</version>
+            </dependency>
+
+            <!-- 2. Cucumber Java (Given, When, Then steps-a Java-la ezhutha) -->
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-java</artifactId>
+                <version>7.15.0</version>
+            </dependency>
+
+            <!-- 3. Cucumber TestNG (Cucumber test-a TestNG moolama run panna) -->
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-testng</artifactId>
+                <version>7.15.0</version>
+            </dependency>
+
+            <!-- 4. TestNG (Neenga already use pandra Assertions-kku) -->
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>7.9.0</version>
+            </dependency>
+
+            <!-- 5. Extent Reports Core (HTML Report generate panna) -->
+            <dependency>
+                <groupId>com.aventstack</groupId>
+                <artifactId>extentreports</artifactId>
+                <version>5.1.1</version>
+            </dependency>
+
+            <!-- 6. Extent Reports Cucumber Adapter (Cucumber-aiyum Extent-aiyum connect panna) -->
+            <dependency>
+                <groupId>tech.grasshopper</groupId>
+                <artifactId>extentreports-cucumber7-adapter</artifactId>
+                <version>1.14.0</version>
+            </dependency>
+
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

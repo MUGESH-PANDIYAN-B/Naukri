@@ -13,15 +13,15 @@ public class ITestListenersClass extends baseSetup implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-        ExtentReport_Test.extentTest=baseSetup.extentReports.createTest(result.getMethod().getMethodName()+"Test Start");
 
+        ExtentReport_Test.extentTest = baseSetup.extentReports.createTest(result.getMethod().getMethodName());
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
         try {
             ExtentReport_Test.extentTest.pass(result.getMethod().getMethodName()+": Test Pass",
-                    MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShot()).build());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -31,12 +31,7 @@ public class ITestListenersClass extends baseSetup implements ITestListener {
     public void onTestFailure(ITestResult result) {
         try {
             ExtentReport_Test.extentTest.fail(result.getMethod().getMethodName(),
-                    MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            ExtentReport_Test.extentReportsEnd();
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShot()).build());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -56,7 +51,11 @@ public class ITestListenersClass extends baseSetup implements ITestListener {
 
     @Override
     public void onStart(ITestContext context) {
-        ExtentReport_Test.extentTestReportStart();
+        try {
+            ExtentReport_Test.extentTestReportStart();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

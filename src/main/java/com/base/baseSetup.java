@@ -10,6 +10,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.awt.*;
@@ -22,7 +23,7 @@ import java.time.format.DateTimeFormatter;
 public class baseSetup {
     public static WebDriver driver;
 public static ExtentReports extentReports;
-public static File file;
+private static File file;
     public static ExtentSparkReporter extentSparkReporter;
     public static String timeStamp;
     public static void launchBrowser(String browserName) {
@@ -31,13 +32,13 @@ public static File file;
             if (browserName.equalsIgnoreCase("chrome")) {
                 driver = new ChromeDriver();
                 System.out.println("Browser Started");
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(300));
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
             } else if (browserName.equalsIgnoreCase("firefox")) {
                 driver = new FirefoxDriver();
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(300));
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
             } else if (browserName.equalsIgnoreCase("edge")) {
                 driver = new EdgeDriver();
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(300));
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
             }
         } catch (Exception e) {
             Assert.fail("Failed to launch browser: " + e.getMessage());
@@ -118,14 +119,15 @@ public static File file;
 
     }
     public static String takeScreenShot() throws IOException {
-
+waitForPageLoad();
             DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
            String timeStamp=formatter.format(java.time.LocalDateTime.now());
-            File filepath=new File("D:\\WorkSpace\\Naukri\\ReportScreenShot1"+timeStamp+".png");
+            File filepath=new File("D:\\WorkSpace\\Naukri\\src\\main\\resources\\screenShot\\LoginPageScreenShot\\ReportScreenShot1"+timeStamp+".png");
             File screenshot=((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileHandler.copy(screenshot,filepath);
-          String  strFilePath=filepath.getAbsolutePath();
-            return strFilePath;
+            String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+
+            return base64Screenshot;
     }
      public static void verifyElementText (WebElement element ,String assertString)
      {
@@ -144,18 +146,25 @@ public static File file;
             extentReports= new ExtentReports();
            file=new File("D:\\WorkSpace\\Naukri\\ReportScreenShot"+"\\Report_"+timeStamp+".html");
          extentSparkReporter=new ExtentSparkReporter(file);
-         extentReports.attachReporter(extentSparkReporter);
          extentReports.setSystemInfo("OS",System.getProperty("os.name"));
          extentReports.setSystemInfo("Java Version",System.getProperty("java.version"));
+         extentReports.attachReporter(extentSparkReporter);
 return extentReports;
 
      }
      public static ExtentReports extentReportsEnd() throws IOException {
         extentReports.flush();
-         file = new File("D:\\WorkSpace\\Naukri\\ReportScreenShot"+"\\Report_"+timeStamp+".html");
+         file = new File("D:\\WorkSpace\\Naukri\\ReportScreenShot\\Report_"+timeStamp+".html");
          Desktop.getDesktop().browse((file).toURI());
          return extentReports;
      }
+    public static void waitForPageLoad() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(webDriver ->
+                ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete")
+        );
+
+    }
 }
 
 

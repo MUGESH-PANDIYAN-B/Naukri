@@ -6,6 +6,7 @@ import com.pageObjectModel.LoginPage;
 import com.utility.FileReaderManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -19,6 +20,7 @@ import static com.utility.FileReaderManager.fileReaderManager;
 
 @Listeners(com.listener.ITestListenersClass.class)
 public class LoginPageRunner {
+
 @Test
     public void loginPageTest() throws IOException {
         launchBrowser("chrome");
@@ -33,6 +35,7 @@ public class LoginPageRunner {
         loginPage.clickLoginButton();
     WebElement name=driver.findElement(By.xpath("//div[@title=\"MUGESH PANDIYAN B\"]"));
     String actualName=name.getAttribute("title");
+    waitForPageLoad();
     Assert.assertEquals(actualName,"MUGESH PANDIYAN B");
         System.out.println("hi"+Thread.currentThread().getId());
     }
