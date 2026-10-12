@@ -10,10 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -59,10 +56,15 @@ public class DataDrivenNaukriTest {
         } catch (Exception e) {
             ExtentReport_Test.extentTest.fail(result.getName() + ": Test Failed",
                     MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShot()).build());
-            driver.quit();
             Assert.fail("Test failed due to exception: " + e.getMessage());
         }
 
+    }
+    @AfterMethod
+    public void closeBrowser() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
     @BeforeClass
     public void setupReport() {
